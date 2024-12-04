@@ -65,6 +65,7 @@ public class Main {
                 System.out.println("2. Aggiorna una classe");
                 System.out.println("3. Visualizza la lista delle classi ");
                 System.out.println("4. Elimina una classe");
+                System.out.println("5. Iscrivi una classe ad una gita");
                 System.out.println("9. Exit");
                 System.out.print("inserisci la tua scelta: ");
                 choice2 = scanner.nextInt();
@@ -84,7 +85,7 @@ public class Main {
                         classeController.deleteClasse();
                         break;
                     case 5:
-
+                        classeController.classeInGita();
                         break;
                     case 6:
 

@@ -39,6 +39,12 @@ public class ClasseService {
         classeRepository.updateClasse(classe);
     }
 
+    public void classeInGita(Classe classe,Gita gita){
+        classeRepository.classeInGita(classe,gita);
+
+
+    }
+
 
 
 

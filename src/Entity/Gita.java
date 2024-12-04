@@ -19,6 +19,8 @@ public class Gita {
     public void setData(LocalDate data){this.data=data;}
     public void setDocente(Docente docente){this.docente=docente;}
     public void setClassi(ArrayList<Classe> classi){this.classi=classi;}
-
+    public void aggiungiClasse(Classe classe){
+        classi.add(classe);
+    }
 
 }

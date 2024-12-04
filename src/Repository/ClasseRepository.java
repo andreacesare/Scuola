@@ -3,6 +3,7 @@ package Repository;
 import Config.DbConnection;
 import Entity.Classe;
 import Entity.Docente;
+import Entity.Gita;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -58,36 +59,67 @@ public class ClasseRepository {
     }
 
     public void deleteClasse(Classe classe) {
-        String sql="delete from classe where id_classe=?";
-        try{
-            Connection c=DbConnection.openConnection();
-            PreparedStatement ps=c.prepareStatement(sql);
+        String sql = "delete from classe where id_classe=?";
+        try {
+            Connection c = DbConnection.openConnection();
+            PreparedStatement ps = c.prepareStatement(sql);
             ps.setInt(1, classe.getId());
-            int d=ps.executeUpdate();
-            if(d>0){
+            int d = ps.executeUpdate();
+            if (d > 0) {
                 System.out.println("Classe eliminata con successo");
             }
-        }catch(ClassNotFoundException | SQLException e){
+        } catch (ClassNotFoundException | SQLException e) {
             logger.log(Level.SEVERE, "Errore" + e.getMessage(), e);
         }
     }
 
     public void updateClasse(Classe classe) {
-        String sql="update classe set nome=?, id_doc=? where id_classe=?";
-        try{
-            Connection c=DbConnection.openConnection();
-            PreparedStatement ps=c.prepareStatement(sql);
+        String sql = "update classe set nome=?, id_doc=? where id_classe=?";
+        try {
+            Connection c = DbConnection.openConnection();
+            PreparedStatement ps = c.prepareStatement(sql);
             ps.setString(1, classe.getNome());
-            ps.setInt(2,classe.getDocente().getId());
-            ps.setInt(3,classe.getId());
-            int u=ps.executeUpdate();
-            if(u>0){
+            ps.setInt(2, classe.getDocente().getId());
+            ps.setInt(3, classe.getId());
+            int u = ps.executeUpdate();
+            if (u > 0) {
                 System.out.println("Classe modificata con successo");
             }
 
-        }catch(ClassNotFoundException | SQLException e){
+        } catch (ClassNotFoundException | SQLException e) {
             logger.log(Level.SEVERE, "Errore" + e.getMessage(), e);
         }
     }
 
+    public void classeInGita(Classe classe, Gita gita) {
+        String query = "select count(*) from partecipa where id_classe=? and id_gita=?";
+        String sql = "insert into partecipa(id_gita,id_classe) values(?,?)";
+        try {
+            Connection q = DbConnection.openConnection();
+            PreparedStatement stm = q.prepareStatement(query);
+            stm.setInt(1, classe.getId());
+            stm.setInt(2, gita.getId());
+            ResultSet rs=stm.executeQuery();
+            rs.next();
+            if(rs.getInt(1)==0) {
+
+                try {
+                    PreparedStatement ps = q.prepareStatement(sql);
+                    ps.setInt(1, gita.getId());
+                    ps.setInt(2, classe.getId());
+                    int u = ps.executeUpdate();
+                    if (u > 0) {
+                        System.out.println("Classe in gita con successo");
+                    }
+                } catch ( SQLException e) {
+                    logger.log(Level.SEVERE, "Errore2" + e.getMessage(), e);
+                }
+            }else{
+                System.out.println("Record gia' presente");
+                }
+        } catch (ClassNotFoundException | SQLException a) {
+            logger.log(Level.SEVERE, "Errore1" + a.getMessage(), a);
+        }
+
+    }
 }

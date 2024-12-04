@@ -1,5 +1,6 @@
 package Service;
 
+import Entity.Classe;
 import Entity.Docente;
 import Entity.Gita;
 import Repository.GitaRepository;
@@ -10,11 +11,12 @@ import java.util.ArrayList;
 public class GitaService {
     GitaRepository gitaRepository = new GitaRepository();
 
-    public void createGita(String nome, LocalDate data, Docente docente){
+    public void createGita(String nome, LocalDate data, Docente docente, Classe classe){
         Gita gita=new Gita();
         gita.setNome(nome);
         gita.setData(data);
         gita.setDocente(docente);
+        gita.aggiungiClasse(classe);
         gitaRepository.createGita(gita);
 
     }

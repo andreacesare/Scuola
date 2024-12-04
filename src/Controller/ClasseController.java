@@ -2,6 +2,7 @@ package Controller;
 
 import Entity.Classe;
 import Entity.Docente;
+import Entity.Gita;
 import Service.ClasseService;
 import Service.DocenteService;
 import Service.GitaService;
@@ -14,7 +15,9 @@ public class ClasseController {
     DocenteController docenteController=new DocenteController();
     ClasseService classeService=new ClasseService();
     DocenteService docenteService=new DocenteService();
+    GitaController gitaController=new GitaController();
     GitaService gitaService=new GitaService();
+
 
     public void createClasse(){
         System.out.println("Inserisci nome della classe");
@@ -23,7 +26,7 @@ public class ClasseController {
         ArrayList<Docente> lista=docenteService.readDocente();
         boolean flag=false;
         for(Docente d:lista){
-            if(d.getClasse().getId()==0){
+            if(d.getClasse()==null){
                 flag=true;
             }
         }
@@ -36,7 +39,7 @@ public class ClasseController {
             if(flag) {
                 for (int i = 0; i < lista.size(); i++) {
                     if (lista.get(i).getId() == id) {
-                        if (lista.get(i).getClasse().getId() == 0) {
+                        if (lista.get(i).getClasse()==null) {
                             Docente docente = lista.get(i);
                             classeService.createClasse(nome, docente);
                             flag = false;
@@ -113,6 +116,33 @@ public class ClasseController {
 
 
             }
+
+    public void classeInGita() {
+        readClasse();
+        System.out.println("Inserisci id della classe da mandare in gita");
+        int idc = scanner.nextInt();
+        scanner.nextLine();
+        gitaController.readGita();
+        System.out.println("Inserisci id della gita a cui iscriverla");
+        int idg = scanner.nextInt();
+        scanner.nextLine();
+        ArrayList<Gita> gite=gitaService.readGita();
+        ArrayList<Classe> classi=classeService.readClasse();
+        Gita gita=new Gita();
+        Classe classe=new Classe();
+        for(int i=0;i<gite.size();i++){
+            if(gite.get(i).getId()==idg){
+                gita=gite.get(i);
+            }
+        }
+        for(int i=0;i<classi.size();i++){
+            if(classi.get(i).getId()==idc){
+                classe=classi.get(i);
+            }
+        }
+        classeService.classeInGita(classe,gita);
+    }
+
 
 
 }
