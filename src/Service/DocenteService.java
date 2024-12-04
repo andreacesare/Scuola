@@ -19,4 +19,18 @@ public class DocenteService {
         return docenteRepository.readDocente();
     }
 
+    public void deleteDocente(int id){
+        Docente docente=new Docente();
+        docente.setId(id);
+        docenteRepository.deleteDocente(docente);
+    }
+
+    public void updateDocente(int id,String nome,String cognome){
+        Docente docente=new Docente();
+        docente.setId(id);
+        docente.setNome(nome);
+        docente.setCognome(cognome);
+        docenteRepository.updateDocente(docente);
+    }
+
 }

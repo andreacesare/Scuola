@@ -24,4 +24,25 @@ public class DocenteController {
             System.out.println(d.getId()+" "+d.getNome()+" "+d.getCognome());
         }
     }
+
+    public void deleteDocente(){
+        readDocente();
+        System.out.println("Inserisci l'id del Docente che vuoi eliminare");
+        int id=scanner.nextInt();
+        scanner.nextLine();
+        docenteService.deleteDocente(id);
+    }
+
+    public void updateDocente(){
+        readDocente();
+        System.out.println("Inserisci l'id del Docente da modificare");
+        int id=scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Inserisci nuovo nome del Docente");
+        String nome=scanner.nextLine();
+        System.out.println("Inserisci nuovo cognome del Docente");
+        String cognome=scanner.nextLine();
+        docenteService.updateDocente(id,nome,cognome);
+
+    }
 }

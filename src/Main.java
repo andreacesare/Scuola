@@ -1,5 +1,6 @@
 import Controller.ClasseController;
 import Controller.DocenteController;
+import Controller.GitaController;
 
 import java.util.Scanner;
 
@@ -33,14 +34,13 @@ public class Main {
                         docenteController.createDocente();
                         break;
                     case 2:
-
+                        docenteController.updateDocente();
                         break;
                     case 3:
                         docenteController.readDocente();
-
                         break;
                     case 4:
-
+                        docenteController.deleteDocente();
                         break;
                     case 5:
 
@@ -57,7 +57,8 @@ public class Main {
                     default:
                         System.out.println("Insersci un numero valido");
                 }
-            } else if (choice1 == 2) {
+            }
+            else if (choice1 == 2) {
                 System.out.println("Classe Classe");
                 System.out.println("****MENU****");
                 System.out.println("1. Crea una nuova classe");
@@ -74,13 +75,13 @@ public class Main {
                         classeController.createClasse();
                         break;
                     case 2:
-
+                        classeController.updateClasse();
                         break;
                     case 3:
                         classeController.readClasse();
                         break;
                     case 4:
-
+                        classeController.deleteClasse();
                         break;
                     case 5:
 
@@ -95,9 +96,51 @@ public class Main {
                         System.out.println("Insersci un numero valido");
                 }
             }
-        } while (choice1 != 4);
+            else if (choice1 == 3) {
+                System.out.println("Classe Gita");
+                System.out.println("****MENU****");
+                System.out.println("1. Crea una nuova gita");
+                System.out.println("2. Aggiorna una gita");
+                System.out.println("3. Visualizza la lista delle gite");
+                System.out.println("4. Elimina una gita");
+                System.out.println("9. Exit");
+                System.out.print("inserisci la tua scelta: ");
+                choice2 = scanner.nextInt();
+                scanner.nextLine();
+                GitaController gitaController = new GitaController();
+                switch (choice2) {
+                    case 1:
+                        gitaController.createGita();
+                        break;
+                    case 2:
+                        gitaController.updateGita();
+                        break;
+                    case 3:
+                        gitaController.readGita();
+                        break;
+                    case 4:
+                        gitaController.deleteGita();
+                        break;
+                    case 5:
+
+                        break;
+                    case 6:
+
+                        break;
+                    case 7:
+
+                        break;
+                    case 9:
+                        System.out.println("Exiting");
+                        break;
+                    default:
+                        System.out.println("Insersci un numero valido");
+                }
+            }
+        }while (choice1 != 4);
+            }
     }
-}
+
 
 
 

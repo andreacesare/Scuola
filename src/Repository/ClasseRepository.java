@@ -34,7 +34,7 @@ public class ClasseRepository {
 
     public ArrayList<Classe> readClasse() {
         ArrayList<Classe> classi = new ArrayList<>();
-        String sql = "SELECT d.id_doc,d.nome as nomedoc,d.cognome,c.nome,c.id_classe FROM classe c JOIN docente d ON c.id_doc=d.id_doc";
+        String sql = "SELECT d.id_doc,d.nome as nomedoc,d.cognome,c.nome,c.id_classe FROM classe c JOIN docente d ON c.id_doc=d.id_doc order by c.id_classe asc";
         try {
             Connection c = DbConnection.openConnection();
             PreparedStatement ps = c.prepareStatement(sql);
@@ -55,6 +55,39 @@ public class ClasseRepository {
             logger.log(Level.SEVERE, "Errore" + e.getMessage(), e);
         }
         return classi;
+    }
+
+    public void deleteClasse(Classe classe) {
+        String sql="delete from classe where id_classe=?";
+        try{
+            Connection c=DbConnection.openConnection();
+            PreparedStatement ps=c.prepareStatement(sql);
+            ps.setInt(1, classe.getId());
+            int d=ps.executeUpdate();
+            if(d>0){
+                System.out.println("Classe eliminata con successo");
+            }
+        }catch(ClassNotFoundException | SQLException e){
+            logger.log(Level.SEVERE, "Errore" + e.getMessage(), e);
+        }
+    }
+
+    public void updateClasse(Classe classe) {
+        String sql="update classe set nome=?, id_doc=? where id_classe=?";
+        try{
+            Connection c=DbConnection.openConnection();
+            PreparedStatement ps=c.prepareStatement(sql);
+            ps.setString(1, classe.getNome());
+            ps.setInt(2,classe.getDocente().getId());
+            ps.setInt(3,classe.getId());
+            int u=ps.executeUpdate();
+            if(u>0){
+                System.out.println("Classe modificata con successo");
+            }
+
+        }catch(ClassNotFoundException | SQLException e){
+            logger.log(Level.SEVERE, "Errore" + e.getMessage(), e);
+        }
     }
 
 }

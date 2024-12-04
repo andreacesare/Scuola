@@ -47,4 +47,39 @@ public class DocenteRepository {
         }
         return lista;
     }
+
+    public void deleteDocente(Docente docente){
+        String sql = "delete from docente where id_doc=?";
+        try{
+            Connection c=DbConnection.openConnection();
+            PreparedStatement ps=c.prepareStatement(sql);
+            ps.setInt(1,docente.getId());
+            int d=ps.executeUpdate();
+            if(d>0){
+                System.out.println("Docente eliminato con successo");
+            }
+
+        }catch(ClassNotFoundException | SQLException e){
+            logger.log(Level.SEVERE,"Errore impossibile connettersi al db"+e.getMessage(),e);
+        }
+    }
+
+    public void updateDocente(Docente docente){
+        String sql = "update docente set nome=?,cognome=? where id_doc=?";
+        try{
+            Connection c=DbConnection.openConnection();
+            PreparedStatement ps=c.prepareStatement(sql);
+            ps.setString(1,docente.getNome());
+            ps.setString(2,docente.getCognome());
+            ps.setInt(3,docente.getId());
+            int u=ps.executeUpdate();
+            if(u>0){
+                System.out.println("Docente modificato con successo");
+            }
+
+
+        }catch(ClassNotFoundException | SQLException e){
+            logger.log(Level.SEVERE,"Errore impossibile connettersi al db"+e.getMessage(),e);
+        }
+    }
 }
