@@ -1,6 +1,7 @@
 package Repository;
 
 import Config.DbConnection;
+import Entity.Classe;
 import Entity.Docente;
 
 import java.sql.*;
@@ -10,6 +11,7 @@ import java.util.logging.*;
 
 public class DocenteRepository {
     private static final Logger logger=Logger.getLogger(DocenteRepository.class.getName());
+
 
     public void createDocente(Docente docente){
         String sql = "insert into docente(nome,cognome) values(?,?)";
@@ -30,16 +32,21 @@ public class DocenteRepository {
 
     public ArrayList<Docente> readDocente(){
         ArrayList<Docente> lista=new ArrayList<>();
-        String sql = "select * from docente";
+        String sql = "select d.id_doc,d.nome,d.cognome,c.id_classe,c.nome as nomec from docente d full join classe c on d.id_doc=c.id_doc order by d.id_doc";
         try{
             Connection c=DbConnection.openConnection();
             PreparedStatement ps= c.prepareStatement(sql);
             ResultSet rs=ps.executeQuery();
             while(rs.next()){
                 Docente docente=new Docente();
+                Classe classe=new Classe();
                 docente.setId(rs.getInt("id_doc"));
                 docente.setNome(rs.getString("nome"));
                 docente.setCognome(rs.getString("cognome"));
+                classe.setId(rs.getInt("id_classe"));
+                classe.setNome(rs.getString("nomec"));
+                classe.setDocente(docente);
+                docente.setClasse(classe);
                 lista.add(docente);
             }
         }catch(ClassNotFoundException | SQLException e){

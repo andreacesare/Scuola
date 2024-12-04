@@ -19,12 +19,11 @@ public class ClasseController {
     public void createClasse(){
         System.out.println("Inserisci nome della classe");
         String nome=scanner.nextLine();
-        System.out.println("Ecco la lsta dei docenti");
         docenteController.readDocente();
         ArrayList<Docente> lista=docenteService.readDocente();
         boolean flag=false;
         for(Docente d:lista){
-            if(d.getClasse()==null){
+            if(d.getClasse().getId()==0){
                 flag=true;
             }
         }
@@ -37,7 +36,7 @@ public class ClasseController {
             if(flag) {
                 for (int i = 0; i < lista.size(); i++) {
                     if (lista.get(i).getId() == id) {
-                        if (lista.get(i).getClasse() == null) {
+                        if (lista.get(i).getClasse().getId() == 0) {
                             Docente docente = lista.get(i);
                             classeService.createClasse(nome, docente);
                             flag = false;
@@ -84,7 +83,7 @@ public class ClasseController {
         ArrayList<Docente> lista=docenteService.readDocente();
                 boolean flag=false;
                 for(Docente d:lista){
-                    if(d.getClasse()==null){
+                    if(d.getClasse().getId()==0){
                         flag=true;
                     }
                 }
@@ -97,7 +96,7 @@ public class ClasseController {
                     if(flag) {
                         for (int i = 0; i < lista.size(); i++) {
                             if (lista.get(i).getId() == idd) {
-                                if (lista.get(i).getClasse() == null) {
+                                if (lista.get(i).getClasse().getId() == 0) {
                                     Docente docente = lista.get(i);
                                     classeService.updateClasse(id,nome, docente);
                                     flag = false;
